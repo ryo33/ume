@@ -43,3 +43,21 @@ fn test_multiple() {
     };
     assert_eq!(ret, "use a::b; fn main() { let a = 1; let b = 2; }");
 }
+
+#[test]
+fn test_example() {
+    let use_something = ume!(
+        use something::prelude::*;
+    );
+    let let_one = ume!(let one = 1;);
+    let let_two = ume!(let two = 2;);
+    let ret = ume! {
+        #use_something
+        fn main() {
+            #let_one
+            #let_two
+            println!("{one} {two}");
+        }
+    };
+    assert_eq!(ret, "use something :: prelude :: * ; fn main() { let one = 1 ; let two = 2 ; println! (\"{one} {two}\") ; }");
+}
