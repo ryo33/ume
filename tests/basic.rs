@@ -26,10 +26,7 @@ fn test_interpolation() {
             println!("Hello, {}!", #name);
         }
     };
-    assert_eq!(
-        ret,
-        "fn main() { println! (\"Hello, {}!\", \"Ryo\") ; }"
-    );
+    assert_eq!(ret, "fn main() { println! (\"Hello, {}!\", \"Ryo\") ; }");
 }
 
 #[test]
@@ -44,8 +41,5 @@ fn test_multiple() {
             #c
         }
     };
-    assert_eq!(
-        ret,
-        "use a::b; fn main() { let a = 1; let b = 2; }"
-    );
+    assert_eq!(ret, "use a::b; fn main() { let a = 1; let b = 2; }");
 }

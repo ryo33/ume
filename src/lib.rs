@@ -42,16 +42,18 @@ impl Ctx {
             match &token {
                 TokenTree::Group(group) => tokens
                     .push(Group::new(group.delimiter(), self.transform(group.stream())).into()),
-                TokenTree::Punct(punct) => match punct.as_char() {
-                    '#' => {
-                        let Some(TokenTree::Ident(ident)) = iter.next() else {
-                        panic!("Unexpected ident after '#'");
-                    };
-                        self.idents.push(ident.clone());
-                        tokens.push(Ident::new("___ume_ume", Span::call_site()).into());
+                TokenTree::Punct(punct) => {
+                    if punct.as_char() == '#' {
+                        if let Some(TokenTree::Ident(ident)) = iter.next() {
+                            self.idents.push(ident.clone());
+                            tokens.push(Ident::new("___ume_ume", Span::call_site()).into());
+                        } else {
+                            panic!("Expected ident after #");
+                        }
+                    } else {
+                        tokens.push(token)
                     }
-                    _ => tokens.push(token),
-                },
+                }
                 _ => tokens.push(token),
             }
         }
