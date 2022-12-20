@@ -79,3 +79,16 @@ fn test_attributes() {
     );
     assert_eq!(ret, r#"#! [crate_type = "lib"] #[test] fn test_foo() {}"#);
 }
+
+#[test]
+fn test_doc_comments() {
+    let ret = format!(
+        "{}",
+        ume! {
+            /// This is a doc comment.
+            /// Line 2
+            fn foo() {}
+        }
+    );
+    assert_eq!(ret, r#"#[doc = " This is a doc comment."] #[doc = " Line 2"] fn foo() {}"#);
+}
