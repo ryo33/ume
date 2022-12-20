@@ -44,11 +44,14 @@ impl Ctx {
                     .push(Group::new(group.delimiter(), self.transform(group.stream())).into()),
                 TokenTree::Punct(punct) => {
                     if punct.as_char() == '#' {
-                        if let Some(TokenTree::Ident(ident)) = iter.next() {
-                            self.idents.push(ident.clone());
-                            tokens.push(Ident::new("___ume_ume", Span::call_site()).into());
-                        } else {
-                            panic!("Expected ident after #");
+                        if let Some(next_token) = iter.next() {
+                            if let TokenTree::Ident(ident) = next_token {
+                                self.idents.push(ident.clone());
+                                tokens.push(Ident::new("___ume_ume", Span::call_site()).into());
+                            } else {
+                                tokens.push(token);
+                                tokens.push(next_token);
+                            }
                         }
                     } else {
                         tokens.push(token)

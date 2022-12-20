@@ -61,3 +61,13 @@ fn test_example() {
     };
     assert_eq!(ret, "use something :: prelude :: * ; fn main() { let one = 1 ; let two = 2 ; println! (\"{one} {two}\") ; }");
 }
+
+#[test]
+fn test_attributes() {
+    let ret = ume! {
+        #![crate_type = "lib"]
+        #[test]
+        fn test_foo() {}
+    };
+    assert_eq!(ret, r#"#! [crate_type = "lib"] #[test] fn test_foo() {}"#);
+}
