@@ -3,14 +3,16 @@ use ume::ume;
 #[test]
 fn test_simple() {
     fn simple() -> String {
-        ume! {
-            use std::collections::HashMap;
+        format!(
+            "{}",
+            ume! {
+                use std::collections::HashMap;
 
-            pub struct Foo {
-                pub bar: HashMap<String, String>,
+                pub struct Foo {
+                    pub bar: HashMap<String, String>,
+                }
             }
-        }
-        .into()
+        )
     }
     assert_eq!(
         simple(),
@@ -25,7 +27,8 @@ fn test_interpolation() {
         fn main() {
             println!("Hello, {}!", #name);
         }
-    };
+    }
+    .to_string();
     assert_eq!(ret, "fn main() { println! (\"Hello, {}!\", \"Ryo\") ; }");
 }
 
@@ -40,7 +43,8 @@ fn test_multiple() {
             #b
             #c
         }
-    };
+    }
+    .to_string();
     assert_eq!(ret, "use a::b; fn main() { let a = 1; let b = 2; }");
 }
 
@@ -58,16 +62,20 @@ fn test_example() {
             #let_two
             println!("{one} {two}");
         }
-    };
+    }
+    .to_string();
     assert_eq!(ret, "use something :: prelude :: * ; fn main() { let one = 1 ; let two = 2 ; println! (\"{one} {two}\") ; }");
 }
 
 #[test]
 fn test_attributes() {
-    let ret = ume! {
-        #![crate_type = "lib"]
-        #[test]
-        fn test_foo() {}
-    };
+    let ret = format!(
+        "{}",
+        ume! {
+            #![crate_type = "lib"]
+            #[test]
+            fn test_foo() {}
+        }
+    );
     assert_eq!(ret, r#"#! [crate_type = "lib"] #[test] fn test_foo() {}"#);
 }

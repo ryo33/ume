@@ -21,7 +21,7 @@ pub fn ume(input: TokenStream) -> TokenStream {
         .collect();
     inner.insert(0, TokenTree::Literal(Literal::string(&string)));
     TokenStream::from_iter(vec![
-        TokenTree::Ident(Ident::new("format", Span::call_site())),
+        TokenTree::Ident(Ident::new("format_args", Span::call_site())),
         TokenTree::Punct(Punct::new('!', Spacing::Alone)),
         TokenTree::Group(Group::new(
             Delimiter::Parenthesis,
