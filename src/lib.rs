@@ -39,6 +39,12 @@ impl Ctx {
         let mut tokens = vec![];
         let mut iter = input.into_iter();
         while let Some(token) = iter.next() {
+            // TODO: proc_macro_span is unstable for now
+            // let next_line = token.span().start().line;
+            // while current_line < next_line {
+            //     tokens.push(Ident::new("___ume_ume_newline", Span::call_site()).into());
+            //     current_line += 1;
+            // }
             match &token {
                 TokenTree::Group(group) => tokens
                     .push(Group::new(group.delimiter(), self.transform(group.stream())).into()),
