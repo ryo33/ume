@@ -2,6 +2,13 @@
 name = "ume"
 version = "0.1.0"
 edition = "2021"
+description = "A simple macro for generating Rust codes"
+license = "CC0-1.0"
+documentation = "https://docs.rs/ume"
+repository = "https://github.com/ryo33/ume"
+readme = "README.md"
+keywords = ["code-generation", "template"]
+categories = ["template-engine"]
 
 [lib]
 proc-macro = true
